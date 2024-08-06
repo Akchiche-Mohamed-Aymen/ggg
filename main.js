@@ -72,15 +72,14 @@ function GetCurrentAddress(){
     })}
 function getPrayerTimes(){
     let date = new Date();
-    fetch(`http://api.aladhan.com/v1/calendarByCity/${date.getFullYear()}/${date.getMonth()+1}?city=${cityInput.value}&country=${cityInput.value}&method=2`)
-    .then(response => response.json())
+    axios.get(`http://api.aladhan.com/v1/calendarByCity/${date.getFullYear()}/${date.getMonth()+1}?city=${cityInput.value}&country=${cityInput.value}&method=2`)
     .then(response => {
-        times[0].innerHTML =  response.data[0].timings.Fajr.slice(0,6);
-        times[1].innerHTML =  response.data[0].timings.Sunrise.slice(0,6);
-        times[2].innerHTML =  response.data[0].timings.Dhuhr.slice(0,6);
-        times[3].innerHTML =  response.data[0].timings.Asr.slice(0,6);
-        times[4].innerHTML =  response.data[0].timings.Maghrib.slice(0,6);
-        times[5].innerHTML =  response.data[0].timings.Isha.slice(0,6);
+        times[0].innerHTML =  response.data.data[0].timings.Fajr.slice(0,6);
+        times[1].innerHTML =  response.data.data[0].timings.Sunrise.slice(0,6);
+        times[2].innerHTML =  response.data.data[0].timings.Dhuhr.slice(0,6);
+        times[3].innerHTML =  response.data.data[0].timings.Asr.slice(0,6);
+        times[4].innerHTML =  response.data.data[0].timings.Maghrib.slice(0,6);
+        times[5].innerHTML =  response.data.data[0].timings.Isha.slice(0,6);
     })
     .catch(err => alert("sorry !! error in times "+err))
 }
