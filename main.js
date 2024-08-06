@@ -15,10 +15,10 @@ function changeCity(val = ''){
     }
     else{
 
-        fetch("https://countriesnow.space/api/v0.1/countries")
-        .then(response => response.json())
+        axios.get("https://countriesnow.space/api/v0.1/countries")
+        
         .then(data =>{
-            let countries = data.data;
+            let countries = data.data.data;
             cityInput.value = val;
             if(val !== "")
                 getPrayerTimes()
@@ -43,10 +43,10 @@ cityInput.onchange = ()=>{
 }
 
 function changeCountry(){
-    fetch("https://countriesnow.space/api/v0.1/countries")
-.then(response => response.json())
+    axios.get("https://countriesnow.space/api/v0.1/countries")
+
 .then(data => {
-    let countries = data.data;
+    let countries = data.data.data;
     console.log(data)
     for(item of countries)
         country.appendChild(createOption(item.country))
@@ -62,11 +62,10 @@ function GetCurrentAddress(){
     navigator.geolocation.getCurrentPosition(pos=>{
         const {latitude,longitude} = pos.coords;
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        fetch(url)
-        .then(res=>res.json())
+        axios.get(url)
         .then(data=>{
-            countryInput.value = data.address.country;
-            changeCity(data.address.city)
+            countryInput.value = data.data.address.country;
+            changeCity(data.data.address.city)
         })
         .catch(err => alert("Error "))
     })}
